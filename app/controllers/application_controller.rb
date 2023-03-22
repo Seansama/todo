@@ -17,10 +17,18 @@ class ApplicationController < ActionController::API
   end
 
   def authorised_user
-
+    decoded_token = decode_token()
+    if decoded_token
+      user_id = decoded_token[0]['id']
+      user = User.find_by(id: user_id)
+    else
+      render json: {error: 'User not found'}, status: :not_found
+    end
   end
 
   def authorize
-
+    unless authorised_user
+      render json: {error: 'Unauthorized user'}, status: :unauthorized
+    end
   end
 end
