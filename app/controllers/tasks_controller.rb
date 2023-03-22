@@ -54,7 +54,7 @@ class TasksController < ApplicationController
 
   def task_params
     params.permit(
-      :title, :description, :status, :user_id
+      :task_name, :task_description, :task_status, :user_id
     )
   end
 end
