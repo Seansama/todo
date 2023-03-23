@@ -21,8 +21,8 @@ class UsersController < ApplicationController
   def create
     user = User.create(
       username: params[:username],
-      password: params[:password_digest],
-      gender: params[:gender]
+      password: params[:password],
+      email: params[:email]
     )
     if user.valid?
     render json: user, status: :created
@@ -44,8 +44,8 @@ class UsersController < ApplicationController
   def update
     user = User.find(id: params[:id])
     user.update(
-      password: params[:password_digest],
-      gender: params[:gender]
+      password: params[:password],
+      username: params[:username]
     )
     if user
       render json: user, status: :accepted
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     user = User.find_by(email:params[:email])
 
     # validate that the user exists
-    if user && user.authenticate(params[:password_digest])
+    if user && user.authenticate(params[:password])
       token = encode_token({id: user.id})
       render json: { user: user, token: token }, status: :ok
     else
