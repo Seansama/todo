@@ -24,10 +24,10 @@ class UsersController < ApplicationController
       password: params[:password],
       gender: params[:gender]
     )
-    if user
+    if user.valid?
     render json: user, status: :created
     else
-      render json: {error: 'User Create failed'}, status: :unprocessable_entity
+      render json: {error: user.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
