@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-
+  before_action :authorize
 
   def index
     render json: Task.all, status: :ok
